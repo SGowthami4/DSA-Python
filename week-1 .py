@@ -45,6 +45,18 @@ print("=========================================================================
 # Input: nums = [3,2,2,3], val = 3
 # Output: 2, nums = [2,2,_,_]
 
+def remove_Element(nums,val):
+    j=0
+    ans=[item for item in nums if item!=val]
+    for i in ans:
+        nums[j]=i
+        j+=1
+    return j
+n1=[3,2,2,3]
+val=2
+print(remove_Element(n1,val))
+        
+
 def removeElement(arr2,k):
     j=0
     for i in range(len(arr2)):
@@ -108,3 +120,64 @@ def MergeSort(A):
 A = [534,246,933, 127,277,321,454,565,2201]
 MergeSort(A)
 print("Sorted:",A)
+
+
+#Merge 2 sorted arrays without using extra space  - Brute Force
+def merge(nums1,m,nums2,n):
+    ans=[0]*len(nums1)
+    ans=nums1[:]
+    i=j=k=0
+    while i<m and j<n:
+        if(ans[i]<nums2[j]):
+            nums1[k]=ans[i]
+            i+=1
+        else:
+            nums1[k]=nums2[j]
+            j+=1
+        k+=1
+    while i<m:
+        nums1[k]=ans[i]
+        i+=1
+        k+=1
+    while j<n:
+        nums1[k]=nums2[j]
+        j+=1
+        k+=1
+    return nums1
+    
+nums1=[1,2,3,0,0,0]
+nums2=[2,5,6]
+m=n=3
+print(merge(nums1,m,nums2,n))
+
+def merge(nums1,m,nums2,n):
+    i=m-1
+    j=n-1
+    k=m+n-1
+    while i>=0 and j>=0:
+        if(nums1[i]>nums2[j]):
+            nums1[k]=nums1[i]
+            i=i-1
+        else:
+            nums1[k]=nums2[j]
+            j=j-1
+        k=k-1
+    while j>=0:
+        nums1[k]=nums2[j]
+        j=j-1
+        k=k-1
+    return nums1
+
+
+
+
+nums3=[1,2,3,0,0,0]
+nums4=[2,5,6]
+k=l=3
+
+nums5=[0]
+a=0
+nums6=[1]
+b=1
+print(nums5,a,nums6,b)
+print(merge(nums3,k,nums4,l))
