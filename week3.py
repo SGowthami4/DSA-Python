@@ -344,3 +344,19 @@ def productExceptSelf(arr):
 
 arr1=[-1,1,0,-3,3]
 print(productExceptSelf(arr1))
+
+def solve(n,arr):
+    ans=[]
+    res=1
+    for i in range(n):
+        for j in range(n):
+            if i!=j:
+                res*=arr[j]
+        ans.append(res)
+        res=1
+
+    return ans
+    
+n=4
+arr=[1,2,3,4]
+print(solve(n,arr))

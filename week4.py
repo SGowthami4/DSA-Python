@@ -122,7 +122,7 @@ def candies(ratings):
     n=len(ratings)
     left=[0]*n
     left[0]=1
-    sum=max(1,left[n-1])
+    sum=0
     for i in range(1,n):
         if ratings[i]>ratings[i-1]:
             left[i]=left[i-1]+1
@@ -136,9 +136,169 @@ def candies(ratings):
             right=curr
         else:
             curr=1
+            right=curr
         sum=sum+max(left[i],curr)
+    sum=sum+left[n-1]
     return sum
 ratings=[1,0,2]
 print(candies(ratings))
 
+def countOfCandies(ratings):
+    sum=1
+    i=1
+    n=len(ratings)
+    up=1
+    down=0
+    peak=1
+    while i<n:
+        if ratings[i]>ratings[i-1]:
+            up+=1
+            peak=up
+            down=0
+            sum+=up
+        elif ratings[i]<ratings[i-1]:
+            down+=1
+            up=1
+            sum+=down
+            if down>=peak:
+                sum+=1
+        else:
+            up=1
+            down=0
+            peak=1
+            sum+=1
+        i+=1
 
+    return sum
+ratings=[1,2,87,87,87,2,1]
+print(countOfCandies(ratings))
+
+
+#trapping rain water
+
+def trap_water(height):
+    n = len(height)
+    water = 0
+
+    for i in range(n):
+        max_left = max(height[:i]) if i > 0 else 0
+        max_right = max(height[i+1:]) if i < n-1 else 0
+
+        current_water = min(max_left, max_right) - height[i]
+        if current_water > 0:
+            water += current_water
+
+    return water
+
+# Example usage
+height = [0,1,0,2,1,0,1,3,2,1,2,1]
+print(trap_water(height))  # Output: 7
+
+
+def findWaterLevel(height):
+    n=len(height)
+    left=0
+    right=n-1
+    maxLeft=0
+    maxRight=0
+    water=0
+    while left<right:
+        if height[left]<height[right]:
+            if(height[left]>=maxLeft):
+                maxLeft=height[left]
+            else:
+                water+=maxLeft-height[left]
+            left+=1
+        else:
+            if(height[right]>=maxRight):
+                maxRight=height[right]
+            else:
+                water+=maxRight-height[right]
+            right=right-1
+    return water
+height=[2,0,1,0,2]
+print(findWaterLevel(height))
+
+
+
+#4 .Integer to roman
+
+# Optimal
+def intToRoman(num):
+    int_to_roman = [
+        (1000, 'M'), (900, 'CM'), (500, 'D'), (400, 'CD'),
+        (100, 'C'), (90, 'XC'), (50, 'L'), (40, 'XL'),
+        (10, 'X'), (9, 'IX'), (5, 'V'), (4, 'IV'), (1, 'I')
+    ]
+    result = ""
+    for value, symbol in int_to_roman:
+        while num >= value:
+            result += symbol
+            num -= value
+    return result
+n=404
+print(intToRoman(n))
+
+
+# bruteForce
+def int_to_roman(num):
+    result=""
+    value_to_symbol = [
+        (1000, "M"), (900, "CM"), (500, "D"), (400, "CD"),
+        (100, "C"), (90, "XC"), (50, "L"), (40, "XL"),
+        (10, "X"), (9, "IX"), (5, "V"), (4, "IV"), (1, "I")
+    ]
+    if num == 0:
+        return ""
+    for value, symbol in value_to_symbol:
+        if num >= value:
+            return symbol + int_to_roman(num - value)
+
+n=404
+print(int_to_roman(n))
+
+#5.Roman to integer
+def roman_to_int(s):
+    roman_values = {
+        'I': 1, 'V': 5, 'X': 10, 'L': 50,
+        'C': 100, 'D': 500, 'M': 1000
+    }
+    
+    stack = []
+    
+    for char in s:
+        current_val = roman_values[char]
+        
+        if stack and stack[-1] < current_val:
+            stack.append(current_val - stack.pop())
+        else:
+            stack.append(current_val)
+    
+    return sum(stack)
+
+s="CDIV"
+print(roman_to_int(s))
+
+
+def romanToInt(s):
+    roman_values = {
+        'I': 1, 'V': 5, 'X': 10, 'L': 50,
+        'C': 100, 'D': 500, 'M': 1000
+    }
+    
+    total = 0
+    previous_val = 0
+    
+    for char in reversed(s):
+        current_val = roman_values[char]
+        
+        if current_val >= previous_val:
+            total += current_val
+        else:
+            total -= current_val
+            
+        previous_val = current_val
+    
+    return total
+s="CDIV"
+print(romanToInt(s))

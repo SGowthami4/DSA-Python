@@ -1,0 +1,2 @@
+Strong Number:A number is called strong number if sum of the factorial of its digit is equal to number itself.
+Ex: 145=1!+4!+5!  , 1!=1  , 2!=2
